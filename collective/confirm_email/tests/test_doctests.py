@@ -8,5 +8,6 @@ def test_suite():
     suite = unittest.TestSuite()
     suite.addTests([
         layered(doctest.DocFileSuite('functional.txt'), layer=FUNCTIONAL_TESTING),
+        doctest.DocTestSuite(module='collective.confirm_email.nonce'),
     ])
     return suite

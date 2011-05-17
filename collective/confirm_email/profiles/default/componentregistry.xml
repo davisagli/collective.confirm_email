@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<componentregistry>
+  <utilities>
+    <utility 
+        interface="collective.confirm_email.interfaces.INonceManager"
+        factory="collective.confirm_email.NonceManager"
+        />
+  </utilities>
+</componentregistry>
