@@ -25,8 +25,14 @@ setup(name='collective.confirm_email',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'collective.beaker',
+          'plone.z3cform',
+          'z3c.form',
           # -*- Extra requirements: -*-
       ],
+      extras_require={
+          'test': ['plone.app.testing'],
+      },
       entry_points="""
       # -*- Entry points: -*-
       [z3c.autoinclude.plugin]

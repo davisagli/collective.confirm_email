@@ -1,0 +1,38 @@
+Say we have a browser view that does something neat.
+
+  >>> class NeatView(object):
+  ...     def __init__(self, context, request):
+  ...         self.context = context
+  ...         self.request = request
+  ...     def __call__(self):
+  ...         return 'neat!'
+
+We may want to make sure that this browser view can only be used after
+the user has entered their e-mail and clicked on a link in the e-mail
+to confirm their e-mail address.
+
+To do this, we'll register a derivative of MyView that is protected with
+the confirm_email decorator:
+
+  >>> from collective.confirm_email import confirm_email
+  >>> @confirm_email
+  ... class ProtectedView(NeatView):
+  ...     pass
+
+  >>> from zope.component import provideAdapter
+  >>> from zope.interface import Interface
+  >>> from zope.publisher.interfaces import IRequest
+  >>> provideAdapter(ProtectedView, [Interface, IRequest], Interface, name=u'neat')
+
+Now if we try to access the view, we'll get redirected to form to enter
+our e-mail for confirmation.
+
+  >>> from plone.testing.z2 import Browser
+  >>> browser = Browser(layer['app'])
+  >>> browser.handleErrors = False
+  >>> browser.open('http://nohost/neat/confirm-email')
+  >>> browser.open('http://nohost/neat')
+  >>> browser.url
+  'http://nohost/neat/confirm-email'
+  >>> 'Please enter your email' in browser.contents
+  True

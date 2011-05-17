@@ -3,18 +3,17 @@
     xmlns:five="http://namespaces.zope.org/five"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:gs="http://namespaces.zope.org/genericsetup"
-    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="collective.confirm_email">
 
   <!-- Include configuration for dependencies listed in setup.py -->
   <includeDependencies package="." />
 
-  <gs:registerProfile
-      name="default"
-      title="Example Add-on"
-      directory="profiles/default"
-      description="Extension profile for Example Add-on"
-      provides="Products.GenericSetup.interfaces.EXTENSION"
+  <browser:page
+      for="*"
+      name="confirm-email"
+      class=".browser.confirm.EmailConfirmationForm"
+      permission="zope.Public"
       />
 
   <!-- -*- extra stuff goes here -*- -->
