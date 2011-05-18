@@ -3,7 +3,7 @@
   <utilities>
     <utility 
         interface="collective.confirm_email.interfaces.INonceManager"
-        factory="collective.confirm_email.NonceManager"
+        factory="collective.confirm_email.nonce.NonceManager"
         />
   </utilities>
 </componentregistry>

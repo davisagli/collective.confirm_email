@@ -15,4 +15,4 @@ def confirm_email(self):
 
     # if it hasn't, redirect to the confirmation page
     url = self.request['URL']
-    raise Redirect(url + '/confirm-email')
+    raise Redirect(url + '/@@confirm-email')

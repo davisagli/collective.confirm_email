@@ -50,8 +50,12 @@ class EmailConfirmationForm(form.Form):
 
     fields = field.Fields(IEmailConfirmation)
 
+    def __init__(self, view, request):
+        self.context = view.context
+        self.request = request
+
     # the confirm code is passed as an extra path element
-    # i.e. /foo/confirm-email/[code]
+    # i.e. /foo/@@confirm-email/[code]
     orig_url = None
     confirm_code = None
     def publishTraverse(self, request, name):
@@ -60,13 +64,11 @@ class EmailConfirmationForm(form.Form):
         self.confirm_code = name
         return self
     
-    _sent = False
     def __call__(self):
+        """Confirm the code or render the form."""
+        
         # make sure we have the form marker interface when testing
         z2.switch_on(self)
-        
-        if self._sent:
-            return _(u'Confirmation was sent.')
         
         if self.confirm_code:
             # confirm/delete nonce
@@ -110,4 +112,4 @@ class EmailConfirmationForm(form.Form):
         mailhost = getUtility(IMailHost)
         mailhost.send(msg, mto, mfrom, subject)
         
-        self._sent = True
+        self.status = _(u'Confirmation was sent.')

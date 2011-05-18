@@ -39,7 +39,7 @@ our e-mail for confirmation.
   >>> browser = Browser(layer['app'])
   >>> browser.open('http://nohost/neat')
   >>> browser.url
-  'http://nohost/neat/confirm-email'
+  'http://nohost/neat/@@confirm-email'
   >>> 'Please enter your email' in browser.contents
   True
 
@@ -69,7 +69,7 @@ will be validated and the browser will be redirected to the original view.
   >>> import re
   >>> url = re.search('(http://[^\s]+)', mailhost.messages.pop()).group(1)
   >>> url # doctest: +ELLIPSIS
-  'http://nohost/neat/confirm-email/...'
+  'http://nohost/neat/@@confirm-email/...'
   >>> browser.open(url)
   >>> browser.url
   'http://nohost/neat'
@@ -94,7 +94,7 @@ accessed from the original view.
 
 If we try to confirm using a made-up nonce, the confirmation view will complain.
 
-  >>> browser.open('http://nohost/neat/confirm-email/foo')
+  >>> browser.open('http://nohost/neat/@@confirm-email/foo')
   >>> 'your confirmation code is invalid or has expired.' in browser.contents
   True
 
